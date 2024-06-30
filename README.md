@@ -1,5 +1,5 @@
 ﻿# Sokoban Game
-made by Arjun Bhogal, Klemens Meyer, Finn Helm, Jonas Beer
+made by Arjun Bhogal & Jonas Beer
 
 # Installation
 ## Prerequisites
@@ -39,8 +39,3 @@ Jonas Beer:
 Arjun Bhogal:
 `cc221016@fhstp.ac.at`
 
-Finn Helm:
-`cc221039@fhstp.ac.at`
-
-Klemens Meyer:
-`cc221011@fhstp.ac.at`
