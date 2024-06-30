@@ -22,7 +22,7 @@ public sealed class InputHandler{
 
     public void Handle(ConsoleKeyInfo keyInfo)
     {
-        Console.WriteLine($"Key pressed: {keyInfo.Key} with modifiers {keyInfo.Modifiers}");  // This will show what key is pressed
+        // Console.WriteLine($"Key pressed: {keyInfo.Key} with modifiers {keyInfo.Modifiers}");  // This will show what key is pressed
 
         GameObject focusedObject = engine.GetFocusedObject();
         if (engine.isMainMenu)
@@ -52,6 +52,18 @@ public sealed class InputHandler{
                         break;
                 }
             
+            }
+        }
+        else if (engine.isDialog)
+        {
+            switch (keyInfo.Key)
+            {
+                case ConsoleKey.D1:
+                    engine.isDialog = false;
+                    break;
+                case ConsoleKey.D2:
+                    Environment.Exit(0);
+                    break;
             }
         }
         else
@@ -88,6 +100,9 @@ public sealed class InputHandler{
                         engine.SaveProgress();
                     }
                     break;
+                    case ConsoleKey.P:
+                        engine.isDialog = true;
+                        break;
                     default:
                         Console.WriteLine("No action assigned for this key.");
                         break;

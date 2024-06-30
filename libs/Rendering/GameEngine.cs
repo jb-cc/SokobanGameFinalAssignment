@@ -208,9 +208,8 @@ public sealed class GameEngine
             else if (isDialog)
             {
                 Console.Clear();
-                Console.WriteLine("====== Dialog ======");
-                Console.WriteLine("Press 1 to go to the next level");
-                
+                Console.WriteLine("====== Game Paused ======");
+                Console.WriteLine("Press 1 to continue");
                 Console.WriteLine("Press 2 to exit");
                 Console.WriteLine("=======================");
             }
