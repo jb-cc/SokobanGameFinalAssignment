@@ -9,6 +9,7 @@ using System.Security.Cryptography;
 
 public sealed class GameEngine
 {
+
     private static GameEngine? _instance;
         private IGameObjectFactory gameObjectFactory;
 
@@ -48,6 +49,9 @@ public sealed class GameEngine
         private Stack<List<GameObject>> stateHistory;  // Stack to store map states for undo functionality
 
         private Stack<(int, int)> playerHistory;
+
+        public bool isMainMenu = false;
+        public bool isDialog = false;
 
         public void SaveCurrentState()
         {
@@ -149,15 +153,26 @@ public sealed class GameEngine
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
             dynamic gameData = FileHandler.ReadJson();  // Load game data
-            map.MapWidth = gameData.map.width;
-            map.MapHeight = gameData.map.height;
-
-            foreach (var gameObject in gameData.gameObjects)
+            if (gameData.mainMenu != null)
+                isMainMenu = true;
+            if (isMainMenu)
             {
-                AddGameObject(CreateGameObject(gameObject));
+                map.MapWidth = 0;
+                map.MapHeight = 0;
             }
+            else
+            {
+                isMainMenu = false;
+                map.MapWidth = gameData.map.width;
+                map.MapHeight = gameData.map.height;
 
-            _focusedObject = gameObjects.OfType<Player>().FirstOrDefault();  // Ensure there is a player
+                foreach (var gameObject in gameData.gameObjects)
+                {
+                    AddGameObject(CreateGameObject(gameObject));
+                }
+
+                _focusedObject = gameObjects.OfType<Player>().FirstOrDefault();  // Ensure there is a player
+            }
         }
 
         public void SetFocused(GameObject gameObject)
@@ -167,21 +182,53 @@ public sealed class GameEngine
 
         public void Render()
         {
-            Console.Clear();
-            
-
-            
+            if (isMainMenu)
+            {
+                if (!FileHandler.saveExists)
+                {
+                    Console.Clear();
+                    Console.WriteLine("====== Main Menu ======");
+                    Console.WriteLine("Welcome to Sokoban!");
+                    Console.WriteLine("Press 1 to start the game");
+                    Console.WriteLine("Press 2 to exit");
+                    Console.WriteLine("=======================");
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("====== Main Menu ======");
+                    Console.WriteLine("Welcome to Sokoban!");
+                    Console.WriteLine("Press 1 to start the game");
+                    Console.WriteLine("Press 2 to continue");
+                    Console.WriteLine("Press 3 to exit");
+                    Console.WriteLine("=======================");
+                
+                }
+            }
+            else if (isDialog)
+            {
+                Console.Clear();
+                Console.WriteLine("====== Dialog ======");
+                Console.WriteLine("Press 1 to go to the next level");
+                
+                Console.WriteLine("Press 2 to exit");
+                Console.WriteLine("=======================");
+            }
+            else
+            {
+                Console.Clear();
                 map.Initialize();
                 PlaceGameObjects();
-            
-            
-            for (int i = 0; i < map.MapHeight; i++)
-            {
-                for (int j = 0; j < map.MapWidth; j++)
+
+
+                for (int i = 0; i < map.MapHeight; i++)
                 {
-                    DrawObject(map.Get(i, j));
+                    for (int j = 0; j < map.MapWidth; j++)
+                    {
+                        DrawObject(map.Get(i, j));
+                    }
+                    Console.WriteLine();
                 }
-                Console.WriteLine();
             }
         }
 

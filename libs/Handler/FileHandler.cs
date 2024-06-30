@@ -14,11 +14,14 @@ public static class FileHandler
     private static int currLevel = 0;
     private static int maxLevel = 4;
     private readonly static string envVar = "GAME_SETUP_PATH";
-    
+    public static bool saveExists = false;
+
+    private static GameEngine engine;  
 
     static FileHandler()
     {
         Initialize();
+        engine = GameEngine.Instance;
     }
 
     public static void setPath(){
@@ -33,10 +36,29 @@ public static class FileHandler
         
     }
     public static void nextLevel(){
-        currLevel++;
-        setPath();
+        if (engine.isMainMenu)
+        {
+            engine.isMainMenu = false;
+            setPath();
+        }
+        else
+        {
+            currLevel++;
+            setPath();
+        }
     }
 
+    public static void FirstLevel(){
+        currLevel = 0;
+        setPath();
+    }
+    public static void LoadGame(){
+        filePath = defaultPath + "Save.json";
+        dynamic data = ReadJson();
+        currLevel = data.level;
+        filePath = defaultPath + $"{currLevel}.json";
+    }
+    
     public static void saveJson(string mergedJson){
 
         JObject currentLevelObj = new JObject(
@@ -53,20 +75,31 @@ public static class FileHandler
 
     private static void Initialize()
     {
+
+        defaultPath = Environment.GetEnvironmentVariable(envVar);
+        filePath = defaultPath + "mainMenu.json";
+        
+        
+        if (File.Exists(defaultPath + "Save.json"))
+        {
+            saveExists = true;
+        }
+        
+
         
         //currLevel = 0;
-        if(Environment.GetEnvironmentVariable(envVar) != null){
+        // if(Environment.GetEnvironmentVariable(envVar) != null){
 
-            defaultPath = Environment.GetEnvironmentVariable(envVar);
+        //     defaultPath = Environment.GetEnvironmentVariable(envVar);
 
-            if(File.Exists(defaultPath + "Save.json")){
-                filePath = defaultPath + "Save.json";
-                dynamic data = ReadJson();
-                currLevel = data.level;
-            }else{
-                filePath = defaultPath +$"{currLevel}.json";
-             }
-        }; 
+        //     if(File.Exists(defaultPath + "Save.json")){
+        //         filePath = defaultPath + "Save.json";
+        //         dynamic data = ReadJson();
+        //         currLevel = data.level;
+        //     }else{
+        //         filePath = defaultPath +$"{currLevel}.json";
+        //      }
+        // }; 
 
     }
 

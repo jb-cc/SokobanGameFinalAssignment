@@ -13,7 +13,7 @@ class Program
 
         engine.Setup();
         //engine.SetFocused(player);
-
+        
         // Main game loop
         while (true)
         {
