@@ -1,7 +1,7 @@
 {
   "mainMenu": {},
   "title": "====== Main Menu ======",
-  "welcomeMessage": "Welcome to Sokoban!",
+  "welcomeMessage": "Welcome to Dr. Rags Sokoban!\n======================",
   "noSaveOptions": [
     "Press 1 to start the game",
     "Press 2 to exit"
@@ -11,5 +11,5 @@
     "Press 2 to continue",
     "Press 3 to exit"
   ],
-  "footer": "======================="
+  "footer": "\n===== Controls ===== \n- Arrow Keys for movement \n- ctrl + Z to undo the last move. \n- ctrl + S to save the game. \n- 'P' to pause the game.\n========================"  
 }
