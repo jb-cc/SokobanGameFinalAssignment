@@ -31,6 +31,7 @@ public static class FileHandler
             Environment.Exit(0); // Exit the game after displaying the win message.
         }
 
+        Console.WriteLine(currLevel);
         filePath = defaultPath +$"{currLevel}.json";
             
         
@@ -49,7 +50,8 @@ public static class FileHandler
     }
 
     public static void FirstLevel(){
-        currLevel = 0;
+        engine.isMainMenu = false;
+        currLevel = -1;
         setPath();
     }
     public static void LoadGame(){
@@ -126,5 +128,38 @@ public static class FileHandler
         }
     }
 
+    private static dynamic ReadJsonMenu(string path)
+    {
+        if (string.IsNullOrEmpty(path))
+        {
+            throw new InvalidOperationException("JSON file path not provided in environment variable");
+        }
+
+        try
+        {
+            string jsonContent = File.ReadAllText(path);
+            dynamic jsonData = JsonConvert.DeserializeObject(jsonContent);
+            return jsonData;
+        }
+        catch (FileNotFoundException)
+        {
+            throw new FileNotFoundException($"JSON file not found at path: {path}");
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Error reading JSON file: {ex.Message}");
+        }
+    }
+    
+    public static dynamic ReadMainMenu(){
+        string path = defaultPath + "mainMenu.json"; 
+        return ReadJsonMenu(path);
+    }
+
+    public static dynamic ReadPauseMenu(){
+        string path = defaultPath + "pauseMenu.json";
+        return ReadJsonMenu(path);
+
+    }
     
 }

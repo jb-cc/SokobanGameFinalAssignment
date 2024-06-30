@@ -22,7 +22,7 @@ public sealed class InputHandler{
 
     public void Handle(ConsoleKeyInfo keyInfo)
     {
-        // Console.WriteLine($"Key pressed: {keyInfo.Key} with modifiers {keyInfo.Modifiers}");  // This will show what key is pressed
+        Console.WriteLine($"Key pressed: {keyInfo.Key} with modifiers {keyInfo.Modifiers}");  // This will show what key is pressed
 
         GameObject focusedObject = engine.GetFocusedObject();
         if (engine.isMainMenu)
@@ -31,9 +31,11 @@ public sealed class InputHandler{
                 switch (keyInfo.Key)
                 {
                     case ConsoleKey.D1:
+                        engine.isMainMenu = false;
                         FileHandler.FirstLevel();
                         break;
                     case ConsoleKey.D2:
+                        engine.isMainMenu = false;
                         Environment.Exit(0);
                         break;
                 }
@@ -42,9 +44,11 @@ public sealed class InputHandler{
                 switch (keyInfo.Key)
                 {
                     case ConsoleKey.D1:
+                        engine.isMainMenu = false;
                         FileHandler.FirstLevel();
                         break;
                     case ConsoleKey.D2:
+                        engine.isMainMenu = false;
                         FileHandler.LoadGame();
                         break;
                     case ConsoleKey.D3:

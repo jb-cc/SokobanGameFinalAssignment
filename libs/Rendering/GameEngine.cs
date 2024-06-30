@@ -1,4 +1,5 @@
-﻿using System.Reflection.Metadata.Ecma335;
+﻿using System.Reflection.Emit;
+using System.Reflection.Metadata.Ecma335;
 namespace libs;
 
 using Newtonsoft.Json;
@@ -52,6 +53,8 @@ public sealed class GameEngine
 
         public bool isMainMenu = false;
         public bool isDialog = false;
+        private dynamic _mainMenuData = FileHandler.ReadMainMenu();
+        private dynamic _pauseMenuData = FileHandler.ReadPauseMenu();
 
         public void SaveCurrentState()
         {
@@ -184,7 +187,28 @@ public sealed class GameEngine
         {
             if (isMainMenu)
             {
-                if (!FileHandler.saveExists)
+                
+                Console.Clear();
+                Console.WriteLine(_mainMenuData.title);
+                Console.WriteLine(_mainMenuData.welcomeMessage);
+                
+                if (FileHandler.saveExists)
+                {
+                    foreach (string option in _mainMenuData.saveExistsOptions)
+                    {
+                        Console.WriteLine(option);
+                    }
+                }
+                else
+                {
+                    foreach (string option in _mainMenuData.noSaveOptions)
+                    {
+                        Console.WriteLine(option);
+                    }
+                }
+                Console.WriteLine(_mainMenuData.footer);
+                
+                /*if (!FileHandler.saveExists)
                 {
                     Console.Clear();
                     Console.WriteLine("====== Main Menu ======");
@@ -204,14 +228,18 @@ public sealed class GameEngine
                     Console.WriteLine("=======================");
                 
                 }
+                */
+
             }
             else if (isDialog)
             {
                 Console.Clear();
-                Console.WriteLine("====== Game Paused ======");
-                Console.WriteLine("Press 1 to continue");
-                Console.WriteLine("Press 2 to exit");
-                Console.WriteLine("=======================");
+                Console.WriteLine(_pauseMenuData.title);
+                foreach (string option in _pauseMenuData.options)
+                {
+                    Console.WriteLine(option);
+                }
+                Console.WriteLine(_pauseMenuData.footer);
             }
             else
             {
