@@ -53,8 +53,10 @@ public sealed class GameEngine
 
         public bool isMainMenu = false;
         public bool isDialog = false;
+        public bool isIntro = false;
         private dynamic _mainMenuData = FileHandler.ReadMainMenu();
         private dynamic _pauseMenuData = FileHandler.ReadPauseMenu();
+        private dynamic _introData = FileHandler.ReadIntro();
 
         public void SaveCurrentState()
         {
@@ -230,6 +232,15 @@ public sealed class GameEngine
                 }
                 */
 
+            }
+            else if (isIntro)
+            {
+                Console.Clear();
+                Console.WriteLine(_introData.title);
+                Console.WriteLine(_introData.description);
+                Console.WriteLine(_introData.gameplay);
+                Console.WriteLine(_introData.callToAction);
+                Console.WriteLine(_introData.startPrompt);
             }
             else if (isDialog)
             {

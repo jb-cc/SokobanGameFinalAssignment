@@ -11,7 +11,7 @@ public static class FileHandler
 {
     private static string filePath;
     private static string defaultPath;
-    private static int currLevel = 0;
+    private static int currLevel = -1;
     private static int maxLevel = 4;
     private readonly static string envVar = "GAME_SETUP_PATH";
     public static bool saveExists = false;
@@ -51,13 +51,13 @@ public static class FileHandler
 
     public static void FirstLevel(){
         engine.isMainMenu = false;
-        currLevel = -1;
+        currLevel = 0;
         setPath();
     }
     public static void LoadGame(){
         filePath = defaultPath + "Save.json";
         dynamic data = ReadJson();
-        currLevel = data.level;
+        currLevel = data.level-1;
         filePath = defaultPath + $"{currLevel}.json";
     }
     
@@ -159,7 +159,11 @@ public static class FileHandler
     public static dynamic ReadPauseMenu(){
         string path = defaultPath + "pauseMenu.json";
         return ReadJsonMenu(path);
-
+    }
+    
+    public static dynamic ReadIntro(){
+        string path = defaultPath + "intro.json";
+        return ReadJsonMenu(path);
     }
     
 }

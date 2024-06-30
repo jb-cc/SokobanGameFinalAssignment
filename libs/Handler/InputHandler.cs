@@ -32,7 +32,7 @@ public sealed class InputHandler{
                 {
                     case ConsoleKey.D1:
                         engine.isMainMenu = false;
-                        FileHandler.FirstLevel();
+                        engine.isIntro = true;
                         break;
                     case ConsoleKey.D2:
                         engine.isMainMenu = false;
@@ -45,7 +45,7 @@ public sealed class InputHandler{
                 {
                     case ConsoleKey.D1:
                         engine.isMainMenu = false;
-                        FileHandler.FirstLevel();
+                        engine.isIntro = true;
                         break;
                     case ConsoleKey.D2:
                         engine.isMainMenu = false;
@@ -56,6 +56,17 @@ public sealed class InputHandler{
                         break;
                 }
             
+            }
+        }
+        else if(engine.isIntro)
+        {
+            switch (keyInfo.Key)
+            {
+                case ConsoleKey.D1:
+                    engine.isIntro = false;
+                    engine.isMainMenu = false;
+                    FileHandler.FirstLevel();
+                    break;
             }
         }
         else if (engine.isDialog)
