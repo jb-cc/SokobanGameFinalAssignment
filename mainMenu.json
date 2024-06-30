@@ -1,6 +1,14 @@
 {
-  "mainMenu": {
-    "option1": "Start Game",
-    "option2": "Exit Game"
-  }
+  "title": "====== Main Menu ======",
+  "welcomeMessage": "Welcome to Sokoban!",
+  "noSaveOptions": [
+      "Press 1 to start the game",
+      "Press 2 to exit"
+  ],
+  "saveExistsOptions": [
+      "Press 1 to start the game",
+      "Press 2 to continue",
+      "Press 3 to exit"
+  ],
+  "footer": "======================="
 }

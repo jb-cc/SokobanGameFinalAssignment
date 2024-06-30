@@ -180,56 +180,65 @@ public sealed class GameEngine
             _focusedObject = gameObject;
         }
 
-        public void Render()
+
+    public void Render()
+    {
+        if (isMainMenu)
         {
-            if (isMainMenu)
+            dynamic mainMenu = FileHandler.ReadMainMenu();
+
+            Console.Clear();
+            Console.WriteLine(mainMenu.title);
+            Console.WriteLine(mainMenu.welcomeMessage);
+
+            if (!FileHandler.saveExists)
             {
-                if (!FileHandler.saveExists)
+                foreach (var option in mainMenu.noSaveOptions)
                 {
-                    Console.Clear();
-                    Console.WriteLine("====== Main Menu ======");
-                    Console.WriteLine("Welcome to Sokoban!");
-                    Console.WriteLine("Press 1 to start the game");
-                    Console.WriteLine("Press 2 to exit");
-                    Console.WriteLine("=======================");
+                    Console.WriteLine(option);
                 }
-                else
-                {
-                    Console.Clear();
-                    Console.WriteLine("====== Main Menu ======");
-                    Console.WriteLine("Welcome to Sokoban!");
-                    Console.WriteLine("Press 1 to start the game");
-                    Console.WriteLine("Press 2 to continue");
-                    Console.WriteLine("Press 3 to exit");
-                    Console.WriteLine("=======================");
-                
-                }
-            }
-            else if (isDialog)
-            {
-                Console.Clear();
-                Console.WriteLine("====== Game Paused ======");
-                Console.WriteLine("Press 1 to continue");
-                Console.WriteLine("Press 2 to exit");
-                Console.WriteLine("=======================");
             }
             else
             {
-                Console.Clear();
-                map.Initialize();
-                PlaceGameObjects();
-
-
-                for (int i = 0; i < map.MapHeight; i++)
+                foreach (var option in mainMenu.saveExistsOptions)
                 {
-                    for (int j = 0; j < map.MapWidth; j++)
-                    {
-                        DrawObject(map.Get(i, j));
-                    }
-                    Console.WriteLine();
+                    Console.WriteLine(option);
                 }
             }
+
+            Console.WriteLine(mainMenu.footer);
         }
+        else if (isDialog)
+        {
+            dynamic pauseMenu = FileHandler.ReadPauseMenu();
+
+            Console.Clear();
+            Console.WriteLine(pauseMenu.title);
+
+            foreach (var option in pauseMenu.options)
+            {
+                Console.WriteLine(option);
+            }
+
+            Console.WriteLine(pauseMenu.footer);
+        }
+        else
+        {
+            Console.Clear();
+            map.Initialize();
+            PlaceGameObjects();
+
+            for (int i = 0; i < map.MapHeight; i++)
+            {
+                for (int j = 0; j < map.MapWidth; j++)
+                {
+                    DrawObject(map.Get(i, j));
+                }
+                Console.WriteLine();
+            }
+        }
+    }
+
 
         
 

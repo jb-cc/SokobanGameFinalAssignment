@@ -126,5 +126,38 @@ public static class FileHandler
         }
     }
 
-    
+    private static dynamic ReadJsonMenu(string path)
+    {
+
+        if (string.IsNullOrEmpty(path))
+        {
+            throw new InvalidOperationException("JSON file path not provided");
+        }
+
+        try
+        {
+            string jsonContent = File.ReadAllText(path);
+            dynamic jsonData = JsonConvert.DeserializeObject(jsonContent);
+            return jsonData;
+        }
+        catch (FileNotFoundException)
+        {
+            throw new FileNotFoundException($"JSON file not found at path: {path}");
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Error reading JSON file: {ex.Message}");
+        }
+    }
+
+    public static dynamic ReadMainMenu(){
+        string Path = defaultPath + "mainMenu.json"; 
+        return ReadJsonMenu(Path);
+    }
+
+    public static dynamic ReadPauseMenu(){
+        string Path = defaultPath + "pauseMenu.json";
+        return ReadJsonMenu(Path);
+
+    }
 }

@@ -1,0 +1,8 @@
+{
+    "title": "====== Game Paused ======",
+    "options": [
+        "Press 1 to continue",
+        "Press 2 to exit"
+    ],
+    "footer": "======================="
+}
