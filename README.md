@@ -1,5 +1,6 @@
 ﻿# Sokoban Game
 made by Arjun Bhogal & Jonas Beer
+[Git Repo Link](https://github.com/jb-cc/SokobanGameFinalAssignment)
 
 # Installation
 ## Prerequisites
@@ -9,7 +10,7 @@ After installation, clone this repo, and open it in a C# IDE of your choice.
 
 Create a new System Environment variable called `GAME_SETUP_PATH`. The value of this variable should be the absolute path of the Setup.json file. Then, from the value, delete the ```Setup.json``` part. 
 
-It should now look like this: `..\SokobanGame\ `
+It should now look like this: `..\SokobanGameFinalAssignment\ `
 
 ## Starting the game
 
